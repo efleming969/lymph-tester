@@ -2,6 +2,8 @@ import Express from "express";
 import WebpackDevMiddleware from "webpack-dev-middleware";
 import Webpack from "webpack";
 import Path from "path";
+import Puppeteer from "puppeteer";
+import Chokidar from "chokidar";
 
 const compiler = Webpack( {
     mode: "development",
@@ -38,14 +40,34 @@ app.get( "/", function( request, response, next ) {
         <title>Testing</title>
         <script src="index.js"></script>
     </head>
-    <body>
-        <div id="mocha"></div> 
-    </body>
+    <body></body>
 </html>
 ` );
 } );
 
 app.listen( 8080, function() {
     console.log( "server started" );
+} );
+
+Puppeteer.launch( { headless: false, devtools: true } ).then( async function( browser ) {
+    const [ page ] = await browser.pages();
+
+    await page.goto( "http://localhost:8080" );
+
+    compiler.hooks.done.tap( "refresh", async function() {
+        await page.reload();
+    } );
+    // page.on( "console", async function( message ) {
+    //     const objects = message.args().filter( function( arg ) {
+    //         return arg.hasOwnProperty( "_remoteObject" );
+    //     } ).map( function( arg ) {
+    //         return arg._remoteObject;
+    //     } );
+    //
+    //     objects.forEach( function( o ) {
+    //         console.log( o.value );
+    //     } );
+    // } );
+
 } );
 

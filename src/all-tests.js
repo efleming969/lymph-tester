@@ -1,8 +1,8 @@
 require( "mocha/mocha.js" );
 
-mocha.setup( { ui: "bdd", color: true, reporter: "list" } );
+mocha.setup( { ui: "bdd", color: false, reporter: "spec" } );
 
-require( "./index.test" );
+require( "./index.test.tsx" );
 
 window.addEventListener( "DOMContentLoaded", function() {
     mocha.run()
