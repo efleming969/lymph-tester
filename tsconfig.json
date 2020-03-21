@@ -1,9 +1,16 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "sourceMap": true,
+//    "sourceMap": true,
+    "inlineSourceMap": true,
     "jsx": "react",
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
   },
   "exclude": [
     "node_modules"

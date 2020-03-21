@@ -1,18 +1,39 @@
-require( "mocha/mocha.js" );
+require("mocha/mocha.js");
 
-mocha.setup( { ui: "bdd", color: false, reporter: "spec" } );
+const ConsoleReporter = function(runner) {
+    runner.on("suite", function(suite) {
+        if (suite.title !== "")
+            console.group(suite.title);
+    });
 
-require( "./index.test.tsx" );
+    runner.on("pending", function(test) {
+        console.log("%c%s", "color:burlywood", test.title);
+    });
 
-window.addEventListener( "DOMContentLoaded", function() {
-    mocha.run()
-        .on( "test end", function( x ) {
-            // console.log( "test ended", x );
-        } )
-        .on( "fail", function( x ) {
-            // console.log( "fail", x );
-        } )
-        .on( "end", function() {
-            console.log( "finished" );
-        } );
-} );
+    runner.on("pass", function(test) {
+        console.log("%c%s", "color:green", test.title);
+    });
+
+    runner.on("fail", function(test, err) {
+        console.log("%c%s", "padding:0 15px;font-size:medium;color:white;background-color:red", test.title);
+        console.log(err.stack);
+        console.log("%c%s", "color:red", "----");
+    });
+
+    runner.on("suite end", function(suite) {
+        if (suite.title !== "")
+            console.groupEnd();
+    });
+};
+
+mocha.setup({
+    ui: "bdd", color: false, reporter: ConsoleReporter
+});
+
+require("./index.test.tsx");
+require("./Forms.test.tsx");
+require("./LoginForm.test.tsx");
+
+window.addEventListener("DOMContentLoaded", function() {
+    mocha.run();
+});

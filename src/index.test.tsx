@@ -10,7 +10,7 @@ import Main from "./Main"
 import Header from "./Header"
 import SimpleForm from "./SimpleForm"
 
-describe( "index", function () {
+describe( "Root Samples", function () {
 
     it( "should render component", function () {
         render( <Main/> )

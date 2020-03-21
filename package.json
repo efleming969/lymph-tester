@@ -4,6 +4,10 @@
   "main": "index.js",
   "type": "module",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js ci"
+  },
   "dependencies": {
     "chai": "^4.2.0",
     "mocha": "^7.1.0",
