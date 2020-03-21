@@ -38,8 +38,10 @@ export const populateForm = function ( formElement, fields ) {
 }
 
 export const render = function ( component ) {
+    const c = document.createElement("div")
+    document.body.replaceChild(c, document.body.firstChild)
     act( function () {
-        ReactDom.render( component, document.body )
+        ReactDom.render( component, c )
     } )
 }
 

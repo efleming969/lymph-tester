@@ -3,11 +3,16 @@ import WebpackDevMiddleware from "webpack-dev-middleware";
 import Webpack from "webpack";
 import Path from "path";
 import Puppeteer from "puppeteer";
-import Chokidar from "chokidar";
 
-const compiler = Webpack( {
+const port = 8080;
+const mode = process.argv[2] || "dev";
+
+const compiler = Webpack({
     mode: "development",
-    entry: Path.join( process.cwd(), "src", "all-tests.js" ),
+    entry: Path.join(process.cwd(), "src", "all-tests.js"),
+    devtool: "inline-source-map",
+    // devtool: "eval-cheap-source-map",
+    // devtool: "cheap-module-eval-source-map",
     output: {
         filename: "index.js"
     },
@@ -25,13 +30,14 @@ const compiler = Webpack( {
     resolve: {
         extensions: [ ".ts", ".tsx", ".js", ".json" ]
     }
-} );
+});
+
 const app = Express();
 
-app.use( WebpackDevMiddleware( compiler, {} ) );
+app.use(WebpackDevMiddleware(compiler, {}));
 
-app.get( "/", function( request, response, next ) {
-    response.send( `<!doctype html>
+app.get("/", function(request, response) {
+    response.send(`<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -40,34 +46,39 @@ app.get( "/", function( request, response, next ) {
         <title>Testing</title>
         <script src="index.js"></script>
     </head>
-    <body></body>
+    <body><div id="container"></div></body>
 </html>
-` );
-} );
+`);
+});
 
-app.listen( 8080, function() {
-    console.log( "server started" );
-} );
+const server = app.listen(port, function() {
+    console.log("server started");
+});
 
-Puppeteer.launch( { headless: false, devtools: true } ).then( async function( browser ) {
+Puppeteer.launch({ headless: false, devtools: true }).then(async function(browser) {
     const [ page ] = await browser.pages();
 
-    await page.goto( "http://localhost:8080" );
+    await page.goto("http://localhost:" + port);
 
-    compiler.hooks.done.tap( "refresh", async function() {
-        await page.reload();
-    } );
-    // page.on( "console", async function( message ) {
-    //     const objects = message.args().filter( function( arg ) {
-    //         return arg.hasOwnProperty( "_remoteObject" );
-    //     } ).map( function( arg ) {
-    //         return arg._remoteObject;
-    //     } );
-    //
-    //     objects.forEach( function( o ) {
-    //         console.log( o.value );
-    //     } );
-    // } );
+    if (mode === "ci") {
+        page.on("console", function(message) {
+            if (message._location.url.includes("mocha.js")) {
+                const testResults = JSON.parse(message._text);
+                console.log(testResults.stats);
+                browser.close().then(function() {
+                    server.close(function() {
+                        process.exit(testResults.failures.length);
+                    });
+                });
+            }
+        });
+    }
 
-} );
+    compiler.hooks.done.tap("refresh", async function() {
+        if (mode === "dev") {
+            await page.reload();
+        }
+    });
+
+});
 

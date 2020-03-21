@@ -10,7 +10,7 @@ import Main from "./Main"
 import Header from "./Header"
 import SimpleForm from "./SimpleForm"
 
-describe( "index", function () {
+describe( "Root Samples", function () {
 
     it( "should render component", function () {
         render( <Main/> )
@@ -55,8 +55,8 @@ describe( "index", function () {
         } ) ).to.be.true
     } )
 
-    it.only( "should enable button when form is valid", function () {
-        const onSubmitted = Sinon.spy()
+    it( "should enable/disable button based on form validity", function () {
+        const onSubmitted = function() {}
 
         render( <SimpleForm onSubmitted={ onSubmitted }/> )
 
