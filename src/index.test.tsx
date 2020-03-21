@@ -55,7 +55,7 @@ describe( "index", function () {
         } ) ).to.be.true
     } )
 
-    it.only( "should enable button when form is valid", function () {
+    it( "should enable button when form is valid", function () {
         const onSubmitted = Sinon.spy()
 
         render( <SimpleForm onSubmitted={ onSubmitted }/> )

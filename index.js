@@ -3,11 +3,11 @@ import WebpackDevMiddleware from "webpack-dev-middleware";
 import Webpack from "webpack";
 import Path from "path";
 import Puppeteer from "puppeteer";
-import Chokidar from "chokidar";
 
 const compiler = Webpack( {
     mode: "development",
     entry: Path.join( process.cwd(), "src", "all-tests.js" ),
+    devtool: "inline-source-maps",
     output: {
         filename: "index.js"
     },
@@ -40,7 +40,7 @@ app.get( "/", function( request, response, next ) {
         <title>Testing</title>
         <script src="index.js"></script>
     </head>
-    <body></body>
+    <body><div></div></body>
 </html>
 ` );
 } );
@@ -49,7 +49,7 @@ app.listen( 8080, function() {
     console.log( "server started" );
 } );
 
-Puppeteer.launch( { headless: false, devtools: true } ).then( async function( browser ) {
+Puppeteer.launch( { pipe: true, headless: false, devtools: true } ).then( async function( browser ) {
     const [ page ] = await browser.pages();
 
     await page.goto( "http://localhost:8080" );
