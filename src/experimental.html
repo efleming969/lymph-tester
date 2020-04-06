@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background: #212121;
+            font-size: 22px;
+            line-height: 32px;
+            color: #ffffff;
+            word-wrap: break-word !important;
+            font-family: sans-serif;
+        }
+
+        h1 {
+            font-size: 60px;
+            text-align: center;
+            color: #FFF;
+        }
+
+        h3 {
+            font-size: 30px;
+            text-align: center;
+            color: #FFF;
+        }
+
+        h3 a {
+            color: #FFF;
+        }
+
+        a {
+            color: #FFF;
+        }
+
+        h1 {
+            margin-top: 100px;
+            text-align: center;
+            font-size: 60px;
+            font-family: 'serif';
+        }
+
+        ul li {
+            display: inline-block;
+            background-color: #E64A19;
+        }
+
+        a {
+            display: block;
+            padding: 0 10px;
+            color: #FFF;
+            font-size: 20px;
+            line-height: 60px;
+            text-decoration: none;
+        }
+
+        a:hover {
+            background-color: #000000;
+        }
+
+        ul ul {
+            display: none;
+            position: absolute;
+            top: 60px;
+        }
+
+        ul li:hover > ul {
+            display: inherit;
+        }
+
+        ul ul li {
+            width: 170px;
+            float: none;
+            display: list-item;
+            position: relative;
+        }
+
+        li > a:after { content: ' +'; }
+        li > a:only-child:after { content: ''; }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <ul>
+            <li><a href="#">WordPress</a>
+                <ul>
+                    <li><a href="#">Themes</a></li>
+                    <li><a href="#">Plugins</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Web Design</a>
+                <ul>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">Links</a></li>
+                </ul>
+            </li>
+        </ul>
+        <h1>Pure CSS Drop Down Menu</h1>
+        <p> A simple dropdown navigation menu made with CSS Only. Dropdowns are marked with a
+            plus sign ( + )</p>
+    </div>
+</body>
+</html>

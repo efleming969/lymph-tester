@@ -1,0 +1,47 @@
+@value dark: #ccc;
+
+.container {
+    width: 200px;
+    margin: 0;
+    padding: 0;
+    display: grid;
+
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 80% auto;
+}
+
+.container input {
+    box-sizing: border-box;
+    border: 1px solid dark;
+    margin: 0;
+    padding: 8px;
+}
+
+.container ul {
+    list-style: none;
+    box-sizing: border-box;
+    border: 1px solid dark;
+    border-top: none;
+    background-color: white;
+    top: 38px;
+    margin: 0;
+    padding: 0;
+
+    grid-column: 1 / span 2;
+    position: absolute;
+    display: none;
+}
+
+.container li {
+    position: relative;
+    padding: 10px;
+}
+
+.container li:hover {
+    background-color: #cccccc;
+    cursor: pointer;
+}
+
+.thing1 {
+   color: blue;
+}

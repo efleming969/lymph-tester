@@ -1,9 +1,10 @@
 import ReactDom from "react-dom"
 import { act } from "react-dom/test-utils"
-import { getByText } from "./dom-query"
+import { getByText } from "./queries"
+import doc = Mocha.reporters.doc
 
 export const changeInput = function ( element, value ) {
-    //convoluted solution change input element
+    //convoluted solution to change input element
     //due to React overwriting the default value property
     const setter = Object.getOwnPropertyDescriptor( window.HTMLInputElement.prototype, "value" ).set
     setter.call( element, value )
@@ -27,7 +28,7 @@ export const click = function ( element ) {
 }
 
 export const clickByText = function ( text ) {
-    click( getByText( text ) )
+    click( getByText( text, document ) )
 }
 
 export const populateForm = function ( formElement, fields ) {
@@ -44,5 +45,7 @@ export const render = function ( component ) {
     act( function () {
         ReactDom.render( component, container )
     } )
+
+    return container
 }
 

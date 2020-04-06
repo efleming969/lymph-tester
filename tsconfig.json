@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-//    "sourceMap": true,
-    "inlineSourceMap": true,
+    "sourceMap": true,
     "jsx": "react",
     "esModuleInterop": true,
     "downlevelIteration": true,

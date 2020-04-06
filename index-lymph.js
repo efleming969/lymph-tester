@@ -9,7 +9,7 @@ const mode = process.argv[ 2 ] || "dev"
 
 const compiler = Webpack( {
     mode: "development",
-    entry: Path.join( process.cwd(), "src", "all-tests.js" ),
+    entry: Path.join( process.cwd(), "src", "all-lymph-tests.ts" ),
     devtool: "inline-source-map",
     output: {
         filename: "index.js"
@@ -33,6 +33,7 @@ const compiler = Webpack( {
         extensions: [ ".ts", ".tsx", ".js", ".json" ]
     }
 } )
+
 const app = Express()
 
 app.use( WebpackDevMiddleware( compiler, {} ) )
@@ -45,7 +46,6 @@ app.get( "/", function( request, response, next ) {
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Testing</title>
-        <script>const MOCHA_REPORTER = "${ mode }"</script>
         <script src="index.js"></script>
     </head>
     <body><div id="container"></div></body>
@@ -58,34 +58,31 @@ const server = app.listen( port, function() {
 } )
 
 const headless = mode === "ci"
-const devtools = mode === "ci"
+const devtools = mode !== "ci"
 
 Puppeteer.launch( { headless, devtools } ).then( async function( browser ) {
     const [ page ] = await browser.pages()
 
     await page.goto( "http://localhost:" + port )
 
-    if ( mode === "ci" ) {
-        page.on( "console", function( message ) {
-            if ( message._type === "log" && message._text.startsWith( "{\n" ) ) {
-                const testResults = JSON.parse( message._text )
-                console.log( testResults.stats )
-                browser.close().then( function() {
-                    server.close( function() {
-                        process.exit( testResults.failures.length )
-                    } )
-                } )
-            }
+    page.on( "console", function( message ) {
+        // console.log( message )
+        // if ( message._type === "log" && message._text.startsWith( "{\n" ) ) {
+        //     const testResults = JSON.parse( message._text )
+        //     console.log( testResults.stats )
+        //     browser.close().then( function() {
+        //         server.close( function() {
+        //             process.exit( testResults.failures.length )
+        //         } )
+        //     } )
+        // }
+    } )
+
+    if ( mode === "dev" ) {
+        compiler.hooks.done.tap( "refresh", async function() {
+            await page.reload()
         } )
     }
-
-    compiler.hooks.done.tap( "refresh", async function() {
-        console.log( "refresh" )
-
-        if ( mode === "dev" ) {
-            await page.reload()
-        }
-    } )
 
 } )
 

@@ -5,18 +5,24 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
-    "test": "node index.js ci"
+    "start": "node index-lymph.js",
+    "test": "node index.js ci",
+    "lymph-tests": "node index-lymph.js"
   },
   "dependencies": {
     "chai": "^4.2.0",
     "mocha": "^7.1.0",
-    "sinon": "^9.0.1"
+    "sinon": "^9.0.1",
+    "classnames": "2.2.6",
+    "chokidar": "^3.3.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "@types/puppeteer": "^2.0.1",
+    "@testing-library/react": "^10.0.2",
+    "@testing-library/user-event": "^10.0.1",
+    "@testing-library/dom": "^7.2.0",
     "css-loader": "^3.4.2",
     "express": "^4.17.1",
     "puppeteer": "^2.1.1",

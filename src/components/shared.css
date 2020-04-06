@@ -1,0 +1,19 @@
+html {
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+    line-height: 2.14em;
+}
+
+img {
+    border-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: sans-serif;
+    font-size: inherit;
+    margin: 0;
+}

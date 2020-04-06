@@ -1,0 +1,15 @@
+.container input {
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: 3rem;
+    border: 1px solid #999;
+    border-radius: .3rem;
+    transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+}
+
+.container input:focus {
+    border: 1px solid #1874dc;
+    box-shadow: 0 0 5px #1874dc;
+}

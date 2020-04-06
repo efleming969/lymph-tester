@@ -3,8 +3,8 @@ import Sinon from "sinon"
 import { isEnabled, isDisabled } from "./assertions"
 import React from "react"
 
-import { getByTestId, getByText, getBySelector } from "./dom-query"
-import { render, click, clickByText, populateForm } from "./dom-utils"
+import { getByTestId, getByText, getBySelector } from "./testing/dom/queries"
+import { render, click, clickByText, populateForm } from "./testing/dom/utils"
 
 import Main from "./Main"
 import Header from "./Header"

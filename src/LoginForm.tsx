@@ -37,7 +37,6 @@ const useForm = function () {
     const fields = useRef({})
 
     const register = function (ref) {
-        console.log(ref);
     }
 
     return {
@@ -46,7 +45,7 @@ const useForm = function () {
     }
 }
 
-const TextField = ({label}) => <div></div>
+const TextField = ({label}) => <div>{label}</div>
 
 export default function LoginForm() {
     const {register, formState} = useForm()
